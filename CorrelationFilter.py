@@ -1,6 +1,7 @@
 import numpy as np
 from sklearn.base import BaseEstimator, TransformerMixin
 
+
 class CorrelationFilter(BaseEstimator, TransformerMixin):
     """
     A scikit-learn compatible transformer to drop features that are highly
@@ -18,6 +19,7 @@ class CorrelationFilter(BaseEstimator, TransformerMixin):
         A list of feature indices to be dropped. This is learned during the
         `fit` method call.
     """
+
     def __init__(self, threshold=0.9):
         self.threshold = threshold
         # Using a set for faster additions during the fitting process
@@ -43,10 +45,10 @@ class CorrelationFilter(BaseEstimator, TransformerMixin):
 
         # Calculate the absolute correlation matrix for the features (columns)
         corr_matrix = np.abs(np.corrcoef(X, rowvar=False))
-        
+
         # Get the number of features
         n_features = X.shape[1]
-        
+
         # We iterate over the upper triangle of the correlation matrix,
         # excluding the diagonal.
         for i in range(n_features):
@@ -56,10 +58,10 @@ class CorrelationFilter(BaseEstimator, TransformerMixin):
                     # We add the index of the second feature in the pair to our drop set.
                     # This provides a deterministic way of choosing which feature to drop.
                     self._to_drop_set.add(j)
-        
+
         # Store the final list of indices to drop, sorted for consistency
         self.to_drop_indices_ = sorted(list(self._to_drop_set))
-        
+
         return self
 
     def transform(self, X):
@@ -78,8 +80,8 @@ class CorrelationFilter(BaseEstimator, TransformerMixin):
         # Ensure the input is a NumPy array
         if not isinstance(X, np.ndarray):
             raise TypeError("CorrelationFilter requires a NumPy array as input.")
-            
+
         # Drop the identified columns by index
         X_transformed = np.delete(X, self.to_drop_indices_, axis=1)
-        
+
         return X_transformed
