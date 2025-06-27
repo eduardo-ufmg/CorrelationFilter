@@ -29,14 +29,12 @@ class CorrelationFilter(BaseEstimator, TransformerMixin):
         """
         Learns which feature indices to drop based on the correlation matrix.
 
-        Parameters:
-        -----------
+        Parameters::-
             X (np.ndarray): The input data from which to identify correlated
                             features. It should have a shape of (n_samples, n_features).
             y (np.ndarray, optional): Ignored. Present for API consistency.
 
-        Returns:
-        --------
+        Returns::-
             self: The fitted transformer instance.
         """
         # Ensure the input is a NumPy array
@@ -69,12 +67,10 @@ class CorrelationFilter(BaseEstimator, TransformerMixin):
         Transforms the data by dropping the highly correlated features identified
         during the fit process.
 
-        Parameters:
-        -----------
+        Parameters::-
             X (np.ndarray): The data to transform, with shape (n_samples, n_features).
 
-        Returns:
-        --------
+        Returns::-
             np.ndarray: The array with correlated features removed.
         """
         # Ensure the input is a NumPy array
